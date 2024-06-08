@@ -12,34 +12,34 @@ const collectionName = 'secondChanceItems'
 const data = JSON.parse(fs.readFileSync(filename, 'utf8')).docs
 
 // connect to database and insert data into the collection
-async function loadData() {
-    const client = new MongoClient(url)
+async function loadData () {
+  const client = new MongoClient(url)
 
-    try {
-      // Connect to the MongoDB client
-      await client.connect()
-      console.log("Connected successfully to server")
+  try {
+    // Connect to the MongoDB client
+    await client.connect()
+    console.log("Connected successfully to server")
 
-      // database will be created if it does not exist
-      const db = client.db(dbName)
+    // database will be created if it does not exist
+    const db = client.db(dbName)
 
-      // collection will be created if it does not exist
-      const collection = db.collection(collectionName)
-      let cursor = await collection.find({})
-      let documents = await cursor.toArray()
+    // collection will be created if it does not exist
+    const collection = db.collection(collectionName)
+    let cursor = await collection.find({})
+    let documents = await cursor.toArray()
 
-      if(documents.length == 0) {
-          // Insert data into the collection
-          const insertResult = await collection.insertMany(data)
-          console.log('Inserted documents:', insertResult.insertedCount)
+    if(documents.length == 0) {
+        // Insert data into the collection
+        const insertResult = await collection.insertMany(data)
+        console.log('Inserted documents:', insertResult.insertedCount)
       } else {
-          console.log("Items already exists in DB")
+        console.log("Items already exists in DB")
       }
   } catch (err) {
-      console.error(err)
+    console.error(err)
   } finally {
-        // Close the connection
-      await client.close()
+    // Close the connection
+    await client.close()
   }
 }
 
