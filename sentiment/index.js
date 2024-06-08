@@ -27,18 +27,18 @@ app.post('/sentiment', async (req, res) => {
   try {
     const analysisResult = analyzer.getSentiment(sentence.split(' '))
     let sentiment = 'neutral' // Changed double quotes to single quotes
-      // Task 5: set sentiment to negative or positive based on score rules
-      if(analysisResult < 0) 
-      {
-        sentiment = 'negative' // Changed double quotes to single quotes
-      } else if (analysisResult > 0.33) // Corrected the else statement
-      {
+    // Task 5: set sentiment to negative or positive based on score rules
+    if (analysisResult < 0) 
+    {
+      sentiment = 'negative' // Changed double quotes to single quotes
+    } else if (analysisResult > 0.33) // Corrected the else statement
+    {
         sentiment = 'positive' // Changed double quotes to single quotes
-      }
+    }
     // Logging the result
     logger.info(`Sentiment analysis result: ${analysisResult}`)
     // Task 6: send a status code of 200 with both sentiment score and the sentiment txt in the format { sentimentScore: analysisResult, sentiment: sentiment }
-    res.status(200).json({ sentimentScore: analysisResult, sentiment: sentiment })
+    res.status(200).json({ sentimentScore: analysisResult, sentiment })
     } catch (error) {
     logger.error(`Error performing sentiment analysis: ${error}`)
     // Task 7: if there is an error, return a HTTP code of 500 and the json {'message': 'Error performing sentiment analysis'}
