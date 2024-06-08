@@ -30,10 +30,9 @@ app.post('/sentiment', async (req, res) => {
     // Task 5: set sentiment to negative or positive based on score rules
     if (analysisResult < 0) {
       sentiment = 'negative' // Changed double quotes to single quotes
-    } else if (analysisResult > 0.33) // Corrected the else statement
-    {
+    } else if (analysisResult > 0.33) {
       sentiment = 'positive'; // Changed double quotes to single quotes
-      }
+    }
     // Logging the result
     logger.info(`Sentiment analysis result: ${analysisResult}`)
     // Task 6: send a status code of 200 with both sentiment score and the sentiment txt in the format { sentimentScore: analysisResult, sentiment: sentiment }
