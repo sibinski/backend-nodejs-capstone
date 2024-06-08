@@ -1,10 +1,10 @@
 require('dotenv').config()
 const express = require('express')
-const axios = require('axios')
+// const axios = require('axios') // Removed unused import
 const logger = require('./logger')
 const expressPino = require('express-pino-logger')({ logger })
 // Task 1: import the natural library
-const natural = ("natural")
+const natural = require("natural") // Corrected the import statement
 // Task 2: initialize the express server
 const app = express()
 const port = process.env.PORT || 3000
@@ -31,8 +31,7 @@ app.post('/sentiment', async (req, res) => {
         if(analysisResult < 0) 
         {
           sentiment = "negative"
-        }
-        else (analysisResult > 0.33)
+        } else if (analysisResult > 0.33) // Corrected the else statement
         {
           sentiment = "positive"
         }
@@ -43,7 +42,7 @@ app.post('/sentiment', async (req, res) => {
     } catch (error) {
       logger.error(`Error performing sentiment analysis: ${error}`)
       // Task 7: if there is an error, return a HTTP code of 500 and the json {'message': 'Error performing sentiment analysis'}
-      res.status(500).json(message, 'Error performing sentiment analysis')
+      res.status(500).json({ message: 'Error performing sentiment analysis' }) // Corrected the JSON format
     }
 })
 app.listen(port, () => {
