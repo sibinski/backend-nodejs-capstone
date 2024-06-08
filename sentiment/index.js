@@ -4,7 +4,7 @@ const express = require('express')
 const logger = require('./logger')
 const expressPino = require('express-pino-logger')({ logger })
 // Task 1: import the natural library
-const natural = require("natural") // Corrected the import statement
+const natural = require('natural') // Changed double quotes to single quotes
 // Task 2: initialize the express server
 const app = express()
 const port = process.env.PORT || 3000
@@ -22,23 +22,23 @@ app.post('/sentiment', async (req, res) => {
   // Initialize the sentiment analyzer with the Natural's PorterStemmer and "English" language
   const Analyzer = natural.SentimentAnalyzer
   const stemmer = natural.PorterStemmer
-  const analyzer = new Analyzer("English", stemmer, "afinn")
+  const analyzer = new Analyzer('English', stemmer, 'afinn') // Changed double quotes to single quotes
   // Perform sentiment analysis
   try {
       const analysisResult = analyzer.getSentiment(sentence.split(' '))
-      let sentiment = "neutral"
+      let sentiment = 'neutral' // Changed double quotes to single quotes
         // Task 5: set sentiment to negative or positive based on score rules
         if(analysisResult < 0) 
         {
-          sentiment = "negative"
+          sentiment = 'negative' // Changed double quotes to single quotes
         } else if (analysisResult > 0.33) // Corrected the else statement
         {
-          sentiment = "positive"
+          sentiment = 'positive' // Changed double quotes to single quotes
         }
       // Logging the result
       logger.info(`Sentiment analysis result: ${analysisResult}`)
       // Task 6: send a status code of 200 with both sentiment score and the sentiment txt in the format { sentimentScore: analysisResult, sentiment: sentiment }
-      res.status(200).json({ sentimentScore: analysisResult, sentiment: sentiment });
+      res.status(200).json({ sentimentScore: analysisResult, sentiment: sentiment })
     } catch (error) {
       logger.error(`Error performing sentiment analysis: ${error}`)
       // Task 7: if there is an error, return a HTTP code of 500 and the json {'message': 'Error performing sentiment analysis'}
