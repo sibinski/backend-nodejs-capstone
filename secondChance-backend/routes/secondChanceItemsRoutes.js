@@ -39,14 +39,14 @@ router.post('/', upload.single('file'), async (req, res, next) => {
     const db = await connectToDatabase()
     const collection = db.collection('secondChanceItems')
     let secondChanceItem = req.body
-    const lastItemQuery = await collection.find().sort({ 'id': -1 }).limit(1).toArray()
+    const lastItemQuery = await collection.find().sort({ id: -1 }).limit(1).toArray()
     if (lastItemQuery.length > 0) {
       secondChanceItem.id = (parseInt(lastItemQuery[0].id) + 1).toString()
     } else {
       secondChanceItem.id = '1'
     }
-    const date_added = Math.floor(new Date().getTime() / 1000)
-    secondChanceItem.date_added = date_added
+    const dateAdded = Math.floor(new Date().getTime() / 1000)
+    secondChanceItem.dateAdded = dateAdded
     const result = await collection.insertOne(secondChanceItem)
     res.status(201).json(result.ops[0])
   } catch (e) {
@@ -61,7 +61,7 @@ router.get('/:id', async (req, res, next) => {
     const collection = db.collection('secondChanceItems')
     const secondChanceItem = await collection.findOne({ id: req.params.id })
     if (!secondChanceItem) {
-      return res.status(404).send("secondChanceItem not found")
+      return res.status(404).send('secondChanceItem not found')
     }
     res.json(secondChanceItem)
   } catch (e) {
